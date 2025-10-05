@@ -2,7 +2,7 @@ import os
 import telebot
 
 import bot_logic
-bot = telebot.TeleBot("'Telebot_secret_cod")
+bot = telebot.TeleBot("code")
 
 text_messages = {
     'welcome':
@@ -34,10 +34,16 @@ def send_bye(message):
 def send_heh(message):
     count_heh = int(message.text.split()[1]) if len(message.text.split()) > 1 else 5
     bot.reply_to(message, "he" * count_heh)
+#Удача dice
+@bot.message_handler(commands=['dice'])
+def send_dice(message):
+    count = bot.send_dice[message.chat.id, '🎳']
+    bot.reply_to(message,f'Тебе выпало {count.dice.value}')
 #Проверка на жизнь
 @bot.message_handler(commands=["ping"])
 def on_ping(message):
     bot.reply_to(message, "Still alive and kicking!")
+
 
 #Вступление новых в группу
 if "TELEBOT_BOT_TOKEN" not in os.environ or "GROUP_CHAT_ID" not in os.environ:
@@ -65,4 +71,5 @@ def on_user_joins(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     bot.reply_to(message, message.text)
+
 bot.polling()
