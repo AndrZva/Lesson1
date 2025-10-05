@@ -9,5 +9,4 @@ else:
     for i in range(length):
         add=random.randint(0,len(sigh)-1)
         result+=sigh[add]
-    print('Пароль успешно сгенерирован:')
-    print(result)
+    print(f'Пароль успешно сгенерирован: {result}')
