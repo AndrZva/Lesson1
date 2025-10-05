@@ -6,7 +6,7 @@ import random
 import requests
 print(os.listdir('images'))
 # Инициализация бота с использованием его токена
-bot = telebot.TeleBot("8279225971:AAFM_df1Ffumu_FmvYUgPgWCLBoKwBwuos0")
+bot = telebot.TeleBot("вускуе")
 @bot.message_handler(commands=['photo'])
 def send_my_photo(message):
     img_name=os.listdir('images')
@@ -41,4 +41,5 @@ def anime(message):
 def send_welcome(message):
     bot.reply_to(message, f'Привет! Я бот {bot.get_me().first_name}!')
 # Запуск бота
+
 bot.polling()
