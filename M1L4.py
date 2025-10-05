@@ -2,7 +2,7 @@ import os
 import telebot
 
 import bot_logic
-bot = telebot.TeleBot("code")
+bot = telebot.TeleBot("secret")
 
 text_messages = {
     'welcome':
@@ -37,7 +37,7 @@ def send_heh(message):
 #Удача dice
 @bot.message_handler(commands=['dice'])
 def send_dice(message):
-    count = bot.send_dice[message.chat.id, '🎳']
+    count = bot.send_dice(message.chat.id, '🎳')
     bot.reply_to(message,f'Тебе выпало {count.dice.value}')
 #Проверка на жизнь
 @bot.message_handler(commands=["ping"])
@@ -45,28 +45,28 @@ def on_ping(message):
     bot.reply_to(message, "Still alive and kicking!")
 
 
-#Вступление новых в группу
-if "TELEBOT_BOT_TOKEN" not in os.environ or "GROUP_CHAT_ID" not in os.environ:
-    raise AssertionError("Please configure TELEBOT_BOT_TOKEN and GROUP_CHAT_ID as environment variables")
+# #Вступление новых в группу
+# if "TELEBOT_BOT_TOKEN" not in os.environ or "GROUP_CHAT_ID" not in os.environ:
+#     raise AssertionError("Please configure TELEBOT_BOT_TOKEN and GROUP_CHAT_ID as environment variables")
 
-bot = telebot.AsyncTeleBot(os.environ["TELEBOT_BOT_TOKEN"])
-GROUP_CHAT_ID = int(os.environ["GROUP_CHAT_ID"])
-def is_api_group(chat_id):
-    return chat_id == GROUP_CHAT_ID
+# bot = telebot.AsyncTeleBot(os.environ["TELEBOT_BOT_TOKEN"])
+# GROUP_CHAT_ID = int(os.environ["GROUP_CHAT_ID"])
+# def is_api_group(chat_id):
+#     return chat_id == GROUP_CHAT_ID
 
-@bot.message_handler(func=lambda m: True, content_types=['new_chat_participant'])
-def on_user_joins(message):
-    if not is_api_group(message.chat.id):
-        return
+# @bot.message_handler(func=lambda m: True, content_types=['new_chat_participant'])
+# def on_user_joins(message):
+#     if not is_api_group(message.chat.id):
+#         return
 
-    name = message.new_chat_participant.first_name
-    if hasattr(message.new_chat_participant, 'last_name') and message.new_chat_participant.last_name is not None:
-        name += u" {}".format(message.new_chat_participant.last_name)
+#     name = message.new_chat_participant.first_name
+#     if hasattr(message.new_chat_participant, 'last_name') and message.new_chat_participant.last_name is not None:
+#         name += u" {}".format(message.new_chat_participant.last_name)
 
-    if hasattr(message.new_chat_participant, 'username') and message.new_chat_participant.username is not None:
-        name += u" (@{})".format(message.new_chat_participant.username)
+#     if hasattr(message.new_chat_participant, 'username') and message.new_chat_participant.username is not None:
+#         name += u" (@{})".format(message.new_chat_participant.username)
 
-    bot.reply_to(message, text_messages['welcome'].format(name=name))
+#     bot.reply_to(message, text_messages['welcome'].format(name=name))
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
