@@ -4,7 +4,7 @@ import bot_logic
 import requests
 import random
 
-bot = telebot.TeleBot("7984070993:AAF-bsOgEq-SwuuBIMYuO_W97afd2yYHDdM")
+bot = telebot.TeleBot("bot")
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -48,3 +48,4 @@ def echo_all(message):
     bot.reply_to(message, message.text)
 
 bot.polling()
+
